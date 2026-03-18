@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import os
 
@@ -10,9 +10,6 @@ if os.environ.get('GITHUB_ACTIONS'):
 else:
     dossier_actuel = os.path.dirname(os.path.abspath(__file__))
     chemin_fichier = os.path.join(dossier_actuel, "status.json")
-
-print(f"--- DEBUG ---")
-print(f"Le fichier sera créé ici : {chemin_fichier}")
 
 def fetch_steam_data():
     url = "https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=730"
@@ -23,7 +20,7 @@ def fetch_steam_data():
         data = response.json()
         
         status_summary = {
-            "last_update": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+            "last_update": datetime.now(offset).strftime("%d/%m/%Y %H:%M:%S"),
             "regions": {}
         }
 
