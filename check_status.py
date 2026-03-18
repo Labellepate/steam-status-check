@@ -3,9 +3,13 @@ import json
 import requests
 from datetime import datetime
 
+import os
 
-dossier_actuel = os.path.dirname(os.path.abspath(__file__))
-chemin_fichier = os.path.join(dossier_actuel, "status.json")
+if os.environ.get('GITHUB_ACTIONS'):
+    chemin_fichier = "status.json"
+else:
+    dossier_actuel = os.path.dirname(os.path.abspath(__file__))
+    chemin_fichier = os.path.join(dossier_actuel, "status.json")
 
 print(f"--- DEBUG ---")
 print(f"Le fichier sera créé ici : {chemin_fichier}")
